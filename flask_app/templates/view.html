@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <title>Sasquatch Websighting</title>
+</head>
+<body>
+<div class="container p-3">
+    <div class="row">
+        <div class="col">
+            <h1>Sasquatch Websighting</h1>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <h1>{{ session['user_name'] }}</h1>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col d-flex justify-content-end">
+            <a href="/dashboard" class="btn btn-outline-dark">Dashboard</a>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col d-flex justify-content-end">
+            <a href="/logout" class="btn btn-outline-dark">Logout</a>
+        </div>
+    </div>
+    <div class="row p-3">
+        <div class="col">
+            <h1>{{ sighting.location}} on {{ sighting.sightingsdate }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col p-3">
+            <div class="row p-3">
+                <div class="col">
+                    What Happened:
+                    <p>{{ sighting.description }}</p>
+                    <p># of Sasquatches: {{ sighting.sasquatchnumber }}</p>
+                    <p>Reported By: {{ sighting.author.first_name }} {{ sighting.author.last_name }}</p>
+                </div>
+                <div class="col">
+                    Skeptics:
+                    {% if not sighting.skeptics %}
+                    <p class="p-3">None Yet</p>
+                    {% endif %}
+                    {% set user_is_skeptic = [] %}
+                    {% for skeptic in sighting.skeptics %}
+                    <div>{{ skeptic.skeptic_info.first_name }} {{ skeptic.skeptic_info.last_name }}</div>
+                        
+                        {% if skeptic.users_id == session['user_id'] %}
+                            {% if user_is_skeptic.append(True) %} {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <p class="p-3">
+                        {% if user_is_skeptic %}
+                        <a href="/skeptics/delete/{{ sighting.id }}" class="btn btn-outline-dark">I Believe</a>
+                        {% endif %}
+                        {% if not user_is_skeptic %}                  
+                        <a href="/skeptics/addme/{{ sighting.id }}" class="btn btn-outline-dark">I'm Skeptical</a>
+                        {% endif %}</p>
+                    <p class="p-3"> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
