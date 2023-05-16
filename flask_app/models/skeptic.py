@@ -4,7 +4,7 @@ from flask import flash, session
 from flask_app.models import user
 
 class Skeptic:
-    DB = "BeltExam_schema"
+    DB = "beltexam_schema"
     def __init__( self , data ):
         self.sightings_id = data['sightings_id']
         self.users_id = data['users_id']

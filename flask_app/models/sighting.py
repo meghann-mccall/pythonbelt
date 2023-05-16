@@ -4,7 +4,7 @@ from flask import flash, session
 from flask_app.models import user, skeptic
 
 class Sighting:
-    DB = "BeltExam_schema"
+    DB = "beltexam_schema"
     def __init__( self , data ):
         self.id = data['id']
         self.location = data['location']
